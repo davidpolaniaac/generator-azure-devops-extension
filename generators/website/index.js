@@ -8,7 +8,7 @@ module.exports = class extends Generator {
     // Have Yeoman greet the user.
     this.log(
       yosay(
-        `Welcome to APP the splendid ${chalk.red('generator-azure-devops-extension')} generator!`
+        `Welcome to the sublime ${chalk.red('generator-azure-devops-extension')} generator!`
       )
     );
 

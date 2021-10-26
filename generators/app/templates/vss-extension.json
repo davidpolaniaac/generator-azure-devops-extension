@@ -1,0 +1,62 @@
+{
+  "manifestVersion": 1,
+  "version": "1.0.0",
+  "name": "<%= name %>",
+  "description": "<%= description %>",
+  "publisher": "<%= publisher %>",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "demands": [
+    "api-version/3.0"
+  ],
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "icons": {
+    "default": "images/world.png"
+  },
+  "tags": [
+    "<%= name %>"
+  ],
+  "scopes": [],
+  "content": {
+    "details": {
+      "path": "static/overview.md"
+    },
+    "license": {
+      "path": "static/apache-v2.0.md"
+    }
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://www.fabrikam-fiber-inc.com/help/getstarted"
+    },
+    "support": {
+      "uri": "https://www.fabrikam-fiber-inc.com/support"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/fabrikam-fiber-inc/myextension"
+  },
+  "branding": {
+    "color": "rgb(34, 34, 34)",
+    "theme": "dark"
+  },
+  "screenshots": [
+    {
+      "path": "screenshots/screen1.png"
+    }
+  ],
+  "badges": [],
+  "files": [
+    {
+      "path": "images",
+      "addressable": true
+    }
+  ],
+  "contributions": []
+}
