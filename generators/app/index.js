@@ -8,16 +8,37 @@ module.exports = class extends Generator {
     // Have Yeoman greet the user.
     this.log(
       yosay(
-        `Welcome to APP the splendid ${chalk.red('generator-azure-devops-extension')} generator!`
+        `Welcome to ${chalk.red('create the extension')}!`
       )
     );
 
     const prompts = [
       {
-        type: 'confirm',
-        name: 'someAnswer',
-        message: 'Would you like to enable this option?',
-        default: true
+        type: "input",
+        name: "id",
+        message: "Extension ID",
+        default: "my-extension-id",
+        validate: this.validateId.bind(this)
+      },
+      {
+        type: "input",
+        name: "name",
+        message: "Extension name",
+        default: "My Extension Name",
+        validate: this.validateNotEmpty.bind(this)
+      },
+      {
+        type: "input",
+        name: "description",
+        message: "Extension description",
+        default: "A short description of my extension",
+        validate: this.validateNotEmpty.bind(this)
+      },
+      {
+        type: "input",
+        name: "publisher",
+        message: "Extension publisher ID",
+        validate: this.validateNotEmpty.bind(this)
       }
     ];
 
@@ -28,13 +49,35 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
+    this.fs.copyTpl(
+      this.templatePath("**/*"),
+      this.destinationPath(this.props.id),
+      this.props,
+      undefined,
+      { globOptions: { dot: true } }
+    );
+
+    this.fs.move(
+      this.destinationPath(this.props.id, "_gitignore"),
+      this.destinationPath(this.props.id, ".gitignore")
     );
   }
 
   install() {
-    this.installDependencies();
+    //this.installDependencies();
+  }
+
+  validateId(input) {
+    const notEmpty = this.validateNotEmpty(input);
+
+    if (typeof notEmpty === "string") {
+      return notEmpty;
+    }
+
+    return (input && input.indexOf(" ") < 0) || "No spaces allowed";
+  }
+
+  validateNotEmpty(input) {
+    return (input && !!input.trim()) || "Cannot be left empty";
   }
 };
