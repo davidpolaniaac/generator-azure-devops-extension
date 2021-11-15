@@ -8,7 +8,7 @@ module.exports = class extends Generator {
     // Have Yeoman greet the user.
     this.log(
       yosay(
-        `Welcome to ${chalk.red('create the extension')}!`
+        `Welcome to ${chalk.green('create the extension')} generator!`
       )
     );
 
