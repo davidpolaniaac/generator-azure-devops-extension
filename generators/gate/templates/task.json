@@ -1,0 +1,40 @@
+{
+  "id": "<%= uuid %>",
+  "name": "<%= gateid %>",
+  "friendlyName": "<%= gatefriendlyname %>",
+  "description": "<%= gatedescription %>",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "author": "<%= gateauthor %>",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "runsOn": ["Server", "ServerGate"],
+  "visibility": ["Build", "Release"],
+  "instanceNameFormat": "Echo $(samplestring)",
+  "inputs": [
+    {
+      "name": "samplestring",
+      "type": "string",
+      "label": "Sample String",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A sample string"
+    }
+  ],
+  "execution": {
+    "HttpRequest": {
+      "Execute": {
+        "EndpointId": null,
+        "EndpointUrl": "https://example.com?name=$(samplestring)",
+        "Method": "GET",
+        "Body": "",
+        "Headers": "{\n\"Content-Type\":\"application/json\"\n}",
+        "WaitForCompletion": "false",
+        "Expression": "eq(root['continue'], false)"
+      }
+    }
+  }
+}
