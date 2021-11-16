@@ -30,77 +30,104 @@ module.exports = class extends Generator {
 
   writing() {
     const webPath = "websites";
-    let destination = path.join(webPath, 'src/Common.scss');
+    let destination = path.join(webPath, "src/Common.scss");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
-        this.templatePath('src/Common.scss'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'src/Common.tsx');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('src/Common.tsx'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'jest.config.js');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('jest.config.js'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'package.json');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('package.json'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'tsconfig.json');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('tsconfig.json'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'tsconfig.test.json');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('tsconfig.test.json'),
-        this.destinationPath(destination),
-      );
-    }
-    destination = path.join(webPath, 'webpack.config.js');
-    if (!this.fs.exists(this.destinationPath(destination))) {
-      this.fs.copyTpl(
-        this.templatePath('webpack.config.js'),
-        this.destinationPath(destination),
+        this.templatePath("src/Common.scss"),
+        this.destinationPath(destination)
       );
     }
 
-    destination = path.join(webPath, `src/${this.props.websiteid}`, `${this.props.websiteid}.html`);
+    destination = path.join(webPath, "src/Common.tsx");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
-        this.templatePath('src/Sample/Sample.html'),
-        this.destinationPath(destination),
+        this.templatePath("src/Common.tsx"),
+        this.destinationPath(destination)
       );
     }
 
-    destination = path.join(webPath, `src/${this.props.websiteid}`, `${this.props.websiteid}.scss`);
+    destination = path.join(webPath, "jest.config.js");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
-        this.templatePath('src/Sample/Sample.scss'),
-        this.destinationPath(destination),
+        this.templatePath("jest.config.js"),
+        this.destinationPath(destination)
       );
     }
 
-    destination = path.join(webPath, `src/${this.props.websiteid}`, `${this.props.websiteid}.tsx`);
+    destination = path.join(webPath, "package.json");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
-        this.templatePath('src/Sample/Sample.tsx'),
+        this.templatePath("package.json"),
+        this.destinationPath(destination)
+      );
+    }
+
+    destination = path.join(webPath, "tsconfig.json");
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("tsconfig.json"),
+        this.destinationPath(destination)
+      );
+    }
+
+    destination = path.join(webPath, "tsconfig.test.json");
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("tsconfig.test.json"),
+        this.destinationPath(destination)
+      );
+    }
+
+    destination = path.join(webPath, "webpack.config.js");
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("webpack.config.js"),
+        this.destinationPath(destination)
+      );
+    }
+
+    destination = path.join(
+      webPath,
+      `src/${this.props.websiteid}`,
+      `${this.props.websiteid}.html`
+    );
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("src/Sample/Sample.html"),
         this.destinationPath(destination),
+        this.props,
+        undefined,
+        { globOptions: { dot: true } }
+      );
+    }
+
+    destination = path.join(
+      webPath,
+      `src/${this.props.websiteid}`,
+      `${this.props.websiteid}.scss`
+    );
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("src/Sample/Sample.scss"),
+        this.destinationPath(destination),
+        this.props,
+        undefined,
+        { globOptions: { dot: true } }
+      );
+    }
+
+    destination = path.join(
+      webPath,
+      `src/${this.props.websiteid}`,
+      `${this.props.websiteid}.tsx`
+    );
+    if (!this.fs.exists(this.destinationPath(destination))) {
+      this.fs.copyTpl(
+        this.templatePath("src/Sample/Sample.tsx"),
+        this.destinationPath(destination),
+        this.props,
+        undefined,
+        { globOptions: { dot: true } }
       );
     }
 
@@ -108,10 +135,10 @@ module.exports = class extends Generator {
       this.destinationPath("vss-extension.json"),
       {}
     );
-    const pathContibution = path.join(webPath, 'dist')
+    const pathContibution = path.join(webPath, "dist");
     const file = {
-        path: pathContibution,
-        addressable: true
+      path: pathContibution,
+      addressable: true
     };
 
     if (webJson.files && !webJson.files.some(x => x.path === pathContibution)) {
@@ -120,18 +147,20 @@ module.exports = class extends Generator {
       webJson.files = [file];
     }
 
-    const pathContibutionHtml = path.join(pathContibution, `${this.props.websiteid}`, `${this.props.websiteid}.html`);
-    const contribution =  {
+    const pathContibutionHtml = path.join(
+      pathContibution,
+      `${this.props.websiteid}`,
+      `${this.props.websiteid}.html`
+    );
+    const contribution = {
       id: this.props.websiteid,
       type: "ms.vss-web.hub",
-      targets: [
-          "ms.vss-code-web.code-hub-group"
-      ],
+      targets: ["ms.vss-code-web.code-hub-group"],
       properties: {
-          name: "My Hub",
-          uri: pathContibutionHtml
+        name: "My Hub",
+        uri: pathContibutionHtml
       }
-  };
+    };
 
     if (webJson.contributions) {
       webJson.contributions.push(contribution);
@@ -140,7 +169,6 @@ module.exports = class extends Generator {
     }
 
     this.fs.writeJSON(this.destinationPath("vss-extension.json"), webJson);
-
   }
 
   install() {
