@@ -59,15 +59,16 @@ module.exports = class extends Generator {
       this.destinationPath("vss-extension.json"),
       {}
     );
+    const taskContibutionPath = path.join(taskPath, "dist");
     const file = {
-      path: taskPath
+      path: taskContibutionPath
     };
     const contribution = {
       id: this.props.taskid,
       type: "ms.vss-distributed-task.task",
       targets: ["ms.vss-distributed-task.tasks"],
       properties: {
-        name: taskPath
+        name: taskContibutionPath
       }
     };
 
