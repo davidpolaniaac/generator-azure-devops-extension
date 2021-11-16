@@ -3,6 +3,7 @@ const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
 const path = require("path");
+const util = require("../util");
 
 module.exports = class extends Generator {
   prompting() {
@@ -17,7 +18,7 @@ module.exports = class extends Generator {
         name: "decoratorid",
         message: "decorator ID",
         default: "example-decorator",
-        validate: this.validateId.bind(this)
+        validate: util.validateId.bind(this)
       }
     ];
 
@@ -72,22 +73,5 @@ module.exports = class extends Generator {
       this.destinationPath("vss-extension.json"),
       decoratorJson
     );
-  }
-
-  validateId(input) {
-    const notEmpty = this.validateNotEmpty(input);
-    const pattern = /^[a-z]+(?:-[a-z]+)*$/;
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (
-      (input && input.indexOf(" ") < 0 && pattern.test(input)) ||
-      "No spaces allowed, only [a-z]+(?:-[a-z]+)*$"
-    );
-  }
-
-  validateNotEmpty(input) {
-    return (input && Boolean(input.trim())) || "Cannot be left empty";
   }
 };

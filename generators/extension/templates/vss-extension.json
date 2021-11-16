@@ -34,7 +34,7 @@
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/<%= publisher %>/<%= name %>"
+        "uri": "https://github.com/<%= publisher %>/<%= id %>"
     },
     "branding": {
         "color": "rgb(34, 34, 34)",

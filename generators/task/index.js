@@ -4,6 +4,8 @@ const chalk = require("chalk");
 const yosay = require("yosay");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const util = require("../util");
+
 module.exports = class extends Generator {
   prompting() {
     this.log(yosay(`Welcome to ${chalk.green("create the task")} generator!`));
@@ -14,21 +16,21 @@ module.exports = class extends Generator {
         name: "taskid",
         message: "task ID",
         default: "example-task-id",
-        validate: this.validateId.bind(this)
+        validate: util.validateId.bind(this)
       },
       {
         type: "input",
         name: "taskfriendlyname",
         message: "friendly Name",
         default: "Example task",
-        validate: this.validateName.bind(this)
+        validate: util.validateName.bind(this)
       },
       {
         type: "input",
         name: "taskdescription",
         message: "task Description",
         default: "Example tasks for greetings",
-        validate: this.validateName.bind(this)
+        validate: util.validateName.bind(this)
       },
       {
         type: "input",
@@ -93,36 +95,5 @@ module.exports = class extends Generator {
       bower: false,
       yarn: false
     });
-  }
-
-  validateId(input) {
-    const notEmpty = this.validateNotEmpty(input);
-    const pattern = /^[a-z]+(?:-[a-z]+)*$/;
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (
-      (input && input.indexOf(" ") < 0 && pattern.test(input)) ||
-      "No spaces allowed, only [a-z]+(?:-[a-z]+)*$"
-    );
-  }
-
-  validateName(input) {
-    const notEmpty = this.validateNotEmpty(input);
-    const pattern = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
-
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (
-      (input && pattern.test(input)) ||
-      "No spaces allowed, only /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
-    );
-  }
-
-  validateNotEmpty(input) {
-    return (input && Boolean(input.trim())) || "Cannot be left empty";
   }
 };

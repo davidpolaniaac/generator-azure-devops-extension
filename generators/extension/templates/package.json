@@ -1,0 +1,34 @@
+{
+    "name": "<%= id %>",
+    "version": "1.0.0",
+    "description": "<%= description %>",
+    "main": "index.js",
+    "scripts": {
+        "prettier": "prettier --config .prettierrc '**/*.ts' --write",
+        "test": "jest --clearCache &&  jest --coverage",
+        "prebuild": "azde-scripts install",
+        "build": "azde-scripts build",
+        "package": "azde-scripts package",
+        "clean": "rimraf ./dist",
+        "create": "tfx extension create --output-path dist --overrides-file config/release.json --rev-version",
+        "create:dev": "tfx extension create --output-path dist --overrides-file config/dev.json --rev-version"
+    },
+    "keywords": [
+        "azure",
+        "devops",
+        "extension"
+    ],
+    "author": "<%= publisher %>",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "^27.0.2",
+        "jest": "^27.0.1",
+        "jest-sonar": "^0.2.12",
+        "jest-sonar-reporter": "^2.0.0",
+        "ts-jest": "^27.0.7",
+        "prettier": "^2.4.1",
+        "tfx-cli": "^0.9.3",
+        "rimraf": "^3.0.2",
+        "azde-scripts": "^1.0.0"
+    }
+}

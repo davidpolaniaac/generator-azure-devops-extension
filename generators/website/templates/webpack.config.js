@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 const entries = {};
 const srcDir = path.join(__dirname, "src");
@@ -32,35 +33,44 @@ module.exports = {
     stats: {
         warnings: false
     },
+    optimization: {
+        minimizer: [new TerserPlugin({ extractComments: false })],
+    },
     module: {
         rules: [{
-                test: /\.tsx?$/,
-                use: "ts-loader"
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "azure-devops-ui/buildScripts/css-variables-loader",
-                    "sass-loader"
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
-            },
-            {
-                test: /\.woff$/,
-                use: [{
-                    loader: "base64-inline-loader"
-                }]
-            },
-            {
-                test: /\.html$/,
-                use: "file-loader"
-            }
+            test: /\.tsx?$/,
+            use: "ts-loader"
+        },
+        {
+            test: /\.scss$/,
+            use: [
+                "style-loader",
+                "css-loader",
+                "azure-devops-ui/buildScripts/css-variables-loader",
+                "sass-loader"
+            ]
+        },
+        {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
+        },
+        {
+            test: /\.woff$/,
+            use: [{
+                loader: "base64-inline-loader"
+            }]
+        },
+        {
+            test: /\.html$/,
+            use: "file-loader"
+        }
         ]
     },
-    plugins: [new CopyWebpackPlugin([{ from: "**/*.html", context: "src" }])]
+    plugins: [
+        new CopyWebpackPlugin({
+           patterns: [ 
+               { from: "**/*.html", context: "src" }
+           ]
+        })
+    ]
 };

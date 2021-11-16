@@ -2,6 +2,8 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const util = require("../util");
+const path = require("path");
 
 module.exports = class extends Generator {
   prompting() {
@@ -18,27 +20,27 @@ module.exports = class extends Generator {
         name: "id",
         message: "Extension ID",
         default: "my-extension-id",
-        validate: this.validateId.bind(this)
+        validate: util.validateId.bind(this)
       },
       {
         type: "input",
         name: "name",
         message: "Extension name",
         default: "My Extension Name",
-        validate: this.validateNotEmpty.bind(this)
+        validate: util.validateNotEmpty.bind(this)
       },
       {
         type: "input",
         name: "description",
         message: "Extension description",
         default: "A short description of my extension",
-        validate: this.validateNotEmpty.bind(this)
+        validate: util.validateNotEmpty.bind(this)
       },
       {
         type: "input",
         name: "publisher",
         message: "Extension publisher ID",
-        validate: this.validateNotEmpty.bind(this)
+        validate: util.validateNotEmpty.bind(this)
       }
     ];
 
@@ -64,20 +66,13 @@ module.exports = class extends Generator {
   }
 
   install() {
-    //this.installDependencies();
-  }
+    const npmdir = path.join(process.cwd(), this.props.id);
+    process.chdir(npmdir);
 
-  validateId(input) {
-    const notEmpty = this.validateNotEmpty(input);
-
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (input && input.indexOf(" ") < 0) || "No spaces allowed";
-  }
-
-  validateNotEmpty(input) {
-    return (input && !!input.trim()) || "Cannot be left empty";
+    this.installDependencies({
+      npm: true,
+      bower: false,
+      yarn: false
+    });
   }
 };

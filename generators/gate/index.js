@@ -4,6 +4,7 @@ const chalk = require("chalk");
 const yosay = require("yosay");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const util = require("../util");
 
 module.exports = class extends Generator {
   prompting() {
@@ -16,21 +17,21 @@ module.exports = class extends Generator {
         name: "gateid",
         message: "gate ID",
         default: "example-gate-id",
-        validate: this.validateId.bind(this)
+        validate: util.validateId.bind(this)
       },
       {
         type: "input",
         name: "gatefriendlyname",
         message: "friendly Name",
         default: "Example gate",
-        validate: this.validateName.bind(this)
+        validate: util.validateName.bind(this)
       },
       {
         type: "input",
         name: "gatedescription",
         message: "gate Description",
         default: "Example gate for greetings",
-        validate: this.validateName.bind(this)
+        validate: util.validateName.bind(this)
       },
       {
         type: "input",
@@ -85,36 +86,5 @@ module.exports = class extends Generator {
     }
 
     this.fs.writeJSON(this.destinationPath("vss-extension.json"), gateJson);
-  }
-
-  validateId(input) {
-    const notEmpty = this.validateNotEmpty(input);
-    const pattern = /^[a-z]+(?:-[a-z]+)*$/;
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (
-      (input && input.indexOf(" ") < 0 && pattern.test(input)) ||
-      "No spaces allowed, only [a-z]+(?:-[a-z]+)*$"
-    );
-  }
-
-  validateName(input) {
-    const notEmpty = this.validateNotEmpty(input);
-    const pattern = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
-
-    if (typeof notEmpty === "string") {
-      return notEmpty;
-    }
-
-    return (
-      (input && pattern.test(input)) ||
-      "No spaces allowed, only /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
-    );
-  }
-
-  validateNotEmpty(input) {
-    return (input && Boolean(input.trim())) || "Cannot be left empty";
   }
 };
