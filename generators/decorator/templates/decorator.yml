@@ -1,4 +1,5 @@
 steps:
-- script: |
-   echo Hello world
+- task: CmdLine@2
   displayName: 'Run my script (injected from decorator)'
+  inputs:
+    script: echo Hello world
