@@ -6,6 +6,7 @@
   "helpMarkDown": "",
   "category": "Utility",
   "author": "<%= taskauthor %>",
+  "visibility": ["Build", "Release"],
   "version": {
     "Major": 1,
     "Minor": 0,
