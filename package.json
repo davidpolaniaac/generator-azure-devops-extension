@@ -1,6 +1,6 @@
 {
   "name": "generator-azure-devops-extension",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "this is a tool to build a scaffolding for an extension in azure devops",
   "homepage": "generator-azure-devops-extension",
   "type": "module",
