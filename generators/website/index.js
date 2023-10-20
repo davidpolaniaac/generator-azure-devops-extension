@@ -1,11 +1,12 @@
 "use strict";
-const Generator = require("yeoman-generator");
-const chalk = require("chalk");
-const yosay = require("yosay");
-const path = require("path");
-const util = require("../util");
 
-module.exports = class extends Generator {
+import Generator from "yeoman-generator";
+import chalk from "chalk";
+import { join } from "path";
+import { validateId } from "../util.js";
+import yosay from "yosay";
+
+export default class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -18,7 +19,7 @@ module.exports = class extends Generator {
         name: "websiteid",
         message: "website ID",
         default: "example-website-id",
-        validate: util.validateId.bind(this)
+        validate: validateId.bind(this)
       }
     ];
 
@@ -30,7 +31,7 @@ module.exports = class extends Generator {
 
   writing() {
     const webPath = "websites";
-    let destination = path.join(webPath, "src/Common.scss");
+    let destination = join(webPath, "src/Common.scss");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("src/Common.scss"),
@@ -38,7 +39,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "src/Common.tsx");
+    destination = join(webPath, "src/Common.tsx");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("src/Common.tsx"),
@@ -46,7 +47,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "jest.config.js");
+    destination = join(webPath, "jest.config.js");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("jest.config.js"),
@@ -54,7 +55,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "package.json");
+    destination = join(webPath, "package.json");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("package.json"),
@@ -62,7 +63,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "tsconfig.json");
+    destination = join(webPath, "tsconfig.json");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("tsconfig.json"),
@@ -70,7 +71,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "tsconfig.test.json");
+    destination = join(webPath, "tsconfig.test.json");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("tsconfig.test.json"),
@@ -78,7 +79,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(webPath, "webpack.config.js");
+    destination = join(webPath, "webpack.config.js");
     if (!this.fs.exists(this.destinationPath(destination))) {
       this.fs.copyTpl(
         this.templatePath("webpack.config.js"),
@@ -86,7 +87,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(
+    destination = join(
       webPath,
       `src/${this.props.websiteid}`,
       `${this.props.websiteid}.html`
@@ -101,7 +102,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(
+    destination = join(
       webPath,
       `src/${this.props.websiteid}`,
       `${this.props.websiteid}.scss`
@@ -116,7 +117,7 @@ module.exports = class extends Generator {
       );
     }
 
-    destination = path.join(
+    destination = join(
       webPath,
       `src/${this.props.websiteid}`,
       `${this.props.websiteid}.tsx`
@@ -135,7 +136,7 @@ module.exports = class extends Generator {
       this.destinationPath("vss-extension.json"),
       {}
     );
-    const pathContibution = path.join(webPath, "dist");
+    const pathContibution = join(webPath, "dist");
     const file = {
       path: pathContibution,
       addressable: true
@@ -147,7 +148,7 @@ module.exports = class extends Generator {
       webJson.files = [file];
     }
 
-    const pathContibutionHtml = path.join(
+    const pathContibutionHtml = join(
       pathContibution,
       `${this.props.websiteid}`,
       `${this.props.websiteid}.html`
@@ -172,13 +173,7 @@ module.exports = class extends Generator {
   }
 
   install() {
-    const npmdir = path.join(process.cwd(), "websites");
-    process.chdir(npmdir);
-
-    this.installDependencies({
-      npm: true,
-      bower: false,
-      yarn: false
-    });
+    const directory = join(process.cwd(), "websites");
+    this.spawnSync("npm", ["install"], { cwd: directory, stdio: "inherit" })
   }
 };

@@ -1,8 +1,8 @@
-function validateNotEmpty(input) {
+export function validateNotEmpty(input) {
     return (input && Boolean(input.trim())) || "Cannot be left empty";
 }
 
-function validateName(input) {
+export function validateName(input) {
     const notEmpty = validateNotEmpty(input);
     const pattern = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
 
@@ -16,7 +16,7 @@ function validateName(input) {
     );
 }
 
-function validateId(input) {
+export function validateId(input) {
     const notEmpty = validateNotEmpty(input);
     const pattern = /^[a-z]+(?:-[a-z]+)*$/;
     if (typeof notEmpty === "string") {
@@ -27,10 +27,4 @@ function validateId(input) {
         (input && input.indexOf(" ") < 0 && pattern.test(input)) ||
         "No spaces allowed, only [a-z]+(?:-[a-z]+)*$"
     );
-}
-
-module.exports = {
-    validateName,
-    validateNotEmpty,
-    validateId
 }

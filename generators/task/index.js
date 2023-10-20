@@ -1,12 +1,14 @@
 "use strict";
-const Generator = require("yeoman-generator");
-const chalk = require("chalk");
-const yosay = require("yosay");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
-const util = require("../util");
 
-module.exports = class extends Generator {
+import { validateId, validateName } from "../util.js";
+
+import Generator from "yeoman-generator";
+import chalk from "chalk";
+import { join } from "path";
+import { v4 as uuidv4 } from "uuid";
+import yosay from "yosay";
+
+export default class extends Generator {
   prompting() {
     this.log(yosay(`Welcome to ${chalk.green("create the task")} generator!`));
 
@@ -16,21 +18,21 @@ module.exports = class extends Generator {
         name: "taskid",
         message: "task ID",
         default: "example-task-id",
-        validate: util.validateId.bind(this)
+        validate: validateId.bind(this)
       },
       {
         type: "input",
         name: "taskfriendlyname",
         message: "friendly Name",
         default: "Example task",
-        validate: util.validateName.bind(this)
+        validate: validateName.bind(this)
       },
       {
         type: "input",
         name: "taskdescription",
         message: "task Description",
         default: "Example tasks for greetings",
-        validate: util.validateName.bind(this)
+        validate: validateName.bind(this)
       },
       {
         type: "input",
@@ -46,7 +48,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const taskPath = path.join("tasks", this.props.taskid);
+    const taskPath = join("tasks", this.props.taskid);
     this.fs.copyTpl(
       this.templatePath("**/*"),
       this.destinationPath(taskPath),
@@ -59,7 +61,7 @@ module.exports = class extends Generator {
       this.destinationPath("vss-extension.json"),
       {}
     );
-    const taskContibutionPath = path.join(taskPath, "dist");
+    const taskContibutionPath = join(taskPath, "dist");
     const file = {
       path: taskContibutionPath
     };
@@ -88,13 +90,7 @@ module.exports = class extends Generator {
   }
 
   install() {
-    const npmdir = path.join(process.cwd(), "tasks", this.props.taskid);
-    process.chdir(npmdir);
-
-    this.installDependencies({
-      npm: true,
-      bower: false,
-      yarn: false
-    });
+    const directory = join(process.cwd(), "tasks", this.props.taskid);
+    this.spawnSync("npm", ["install"], { cwd: directory, stdio: "inherit" })
   }
 };

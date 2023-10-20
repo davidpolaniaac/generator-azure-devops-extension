@@ -1,8 +1,9 @@
 {
   "name": "generator-azure-devops-extension",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "this is a tool to build a scaffolding for an extension in azure devops",
   "homepage": "generator-azure-devops-extension",
+  "type": "module",
   "author": {
     "name": "David Polania",
     "email": "davidpolaniaac@users.noreply.github.com",
@@ -20,22 +21,22 @@
   ],
   "devDependencies": {
     "coveralls": "^3.1.1",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "husky": "^3.1.0",
-    "jest": "^26.6.3",
-    "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^8.0.0"
+    "yeoman-test": "^8.1.0"
   },
   "engines": {
     "npm": ">= 4.0.0"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "uuid": "^8.3.2",
+    "chalk": "^5.3.0",
+    "uuid": "^9.0.1",
     "yeoman-generator": "^6.0.1",
     "yosay": "^2.0.2"
   },

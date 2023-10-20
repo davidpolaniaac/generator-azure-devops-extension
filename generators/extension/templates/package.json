@@ -21,14 +21,14 @@
     "author": "<%= publisher %>",
     "license": "MIT",
     "devDependencies": {
-        "@types/jest": "^27.0.2",
-        "jest": "^27.0.1",
-        "jest-sonar": "^0.2.12",
+        "@types/jest": "^29.5.6",
+        "jest": "^29.7.0",
+        "jest-sonar": "^0.2.16",
         "jest-sonar-reporter": "^2.0.0",
-        "ts-jest": "^27.0.7",
-        "prettier": "^2.4.1",
-        "tfx-cli": "^0.9.3",
-        "rimraf": "^3.0.2",
-        "azde-scripts": "^1.0.0"
+        "ts-jest": "^29.1.1",
+        "prettier": "^3.0.3",
+        "tfx-cli": "^0.16.0",
+        "rimraf": "^5.0.5",
+        "azde-scripts": "^2.0.1"
     }
 }

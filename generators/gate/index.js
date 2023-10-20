@@ -1,12 +1,14 @@
 "use strict";
-const Generator = require("yeoman-generator");
-const chalk = require("chalk");
-const yosay = require("yosay");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
-const util = require("../util");
 
-module.exports = class extends Generator {
+import { validateId, validateName } from "../util.js";
+
+import Generator from "yeoman-generator";
+import chalk from "chalk";
+import { join } from "path";
+import { v4 as uuidv4 } from "uuid";
+import yosay from "yosay";
+
+export default class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(yosay(`Welcome to ${chalk.green("create the gate")} generator!`));
@@ -17,21 +19,21 @@ module.exports = class extends Generator {
         name: "gateid",
         message: "gate ID",
         default: "example-gate-id",
-        validate: util.validateId.bind(this)
+        validate: validateId.bind(this)
       },
       {
         type: "input",
         name: "gatefriendlyname",
         message: "friendly Name",
         default: "Example gate",
-        validate: util.validateName.bind(this)
+        validate: validateName.bind(this)
       },
       {
         type: "input",
         name: "gatedescription",
         message: "gate Description",
         default: "Example gate for greetings",
-        validate: util.validateName.bind(this)
+        validate: validateName.bind(this)
       },
       {
         type: "input",
@@ -48,7 +50,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const gatePath = path.join("gates", this.props.gateid);
+    const gatePath = join("gates", this.props.gateid);
     this.fs.copyTpl(
       this.templatePath("**/*"),
       this.destinationPath(gatePath),

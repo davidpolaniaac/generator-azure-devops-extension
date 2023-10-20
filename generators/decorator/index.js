@@ -1,13 +1,13 @@
 "use strict";
-const Generator = require("yeoman-generator");
-const chalk = require("chalk");
-const yosay = require("yosay");
-const path = require("path");
-const util = require("../util");
 
-module.exports = class extends Generator {
+import Generator from "yeoman-generator";
+import chalk from "chalk";
+import { join } from "path";
+import { validateId } from "../util.js";
+import yosay from "yosay";
+
+export default class extends Generator {
   prompting() {
-    // Have Yeoman greet the user.
     this.log(
       yosay(`Welcome to ${chalk.green("create the decorator")} generator!`)
     );
@@ -18,7 +18,7 @@ module.exports = class extends Generator {
         name: "decoratorid",
         message: "decorator ID",
         default: "example-decorator",
-        validate: util.validateId.bind(this)
+        validate: validateId.bind(this)
       }
     ];
 
@@ -29,7 +29,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const decoratorPath = path.join(
+    const decoratorPath = join(
       "decorators",
       `${this.props.decoratorid}.yml`
     );

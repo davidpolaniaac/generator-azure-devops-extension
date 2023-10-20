@@ -1,11 +1,13 @@
 'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
-const util = require("../util");
-const path = require("path");
 
-module.exports = class extends Generator {
+import { validateId, validateNotEmpty } from "../util.js";
+
+import Generator from 'yeoman-generator';
+import chalk from 'chalk';
+import { join } from "path";
+import yosay from 'yosay';
+
+export default class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -20,27 +22,27 @@ module.exports = class extends Generator {
         name: "id",
         message: "Extension ID",
         default: "my-extension-id",
-        validate: util.validateId.bind(this)
+        validate: validateId.bind(this)
       },
       {
         type: "input",
         name: "name",
         message: "Extension name",
         default: "My Extension Name",
-        validate: util.validateNotEmpty.bind(this)
+        validate: validateNotEmpty.bind(this)
       },
       {
         type: "input",
         name: "description",
         message: "Extension description",
         default: "A short description of my extension",
-        validate: util.validateNotEmpty.bind(this)
+        validate: validateNotEmpty.bind(this)
       },
       {
         type: "input",
         name: "publisher",
         message: "Extension publisher ID",
-        validate: util.validateNotEmpty.bind(this)
+        validate: validateNotEmpty.bind(this)
       }
     ];
 
@@ -66,13 +68,15 @@ module.exports = class extends Generator {
   }
 
   install() {
-    const npmdir = path.join(process.cwd(), this.props.id);
-    process.chdir(npmdir);
+    const directory = join(process.cwd(), this.props.id);
+    this.spawnSync("npm", ["install"], { cwd: directory, stdio: "inherit" })
+  }
 
-    this.installDependencies({
-      npm: true,
-      bower: false,
-      yarn: false
-    });
+  end() {
+    this.log(
+      yosay(
+        `The extension has been created. Please navigate to the directory\n${chalk.green("cd " + this.props.id)}`
+      )
+    );
   }
 };
