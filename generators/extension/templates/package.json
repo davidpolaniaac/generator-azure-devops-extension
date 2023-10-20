@@ -6,9 +6,9 @@
     "scripts": {
         "prettier": "prettier --config .prettierrc '**/*.ts' --write",
         "test": "jest --clearCache &&  jest --coverage",
-        "prebuild": "azde-scripts install",
-        "build": "azde-scripts build",
-        "package": "azde-scripts package",
+        "prebuild": "npx azde-scripts install",
+        "build": "npx azde-scripts build",
+        "package": "npx azde-scripts package",
         "clean": "rimraf ./dist",
         "create": "tfx extension create --output-path dist --overrides-file config/release.json --rev-version",
         "create:dev": "tfx extension create --output-path dist --overrides-file config/dev.json --rev-version"
@@ -28,7 +28,6 @@
         "ts-jest": "^29.1.1",
         "prettier": "^3.0.3",
         "tfx-cli": "^0.16.0",
-        "rimraf": "^5.0.5",
-        "azde-scripts": "^2.0.1"
+        "rimraf": "^5.0.5"
     }
 }
